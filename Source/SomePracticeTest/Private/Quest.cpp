@@ -18,6 +18,8 @@ AQuest::AQuest()
 // Called when the game starts or when spawned
 void AQuest::BeginPlay()
 {
+	UE_LOG(QuestLog, Log, TEXT("BeginPlay for quest: $s"), *GetNameSafe(this))
+
 	Super::BeginPlay();
 	if (UQuestSystemComponentLong* QuestComponent = GetWorld()->GetAuthGameMode()->GetComponentByClass<UQuestSystemComponentLong>())
 	{
@@ -45,6 +47,7 @@ void AQuest::Tick(float DeltaTime)
 
 void AQuest::UpdateStartStatus()
 {
+	UE_LOG(QuestLog, Log, TEXT("UpdateStartStatus for quest: %s"), *GetNameSafe(this))
 	for (UQuestCondition* Condition : StartConditions)
 	{
 		if (!ensure(Condition))
@@ -68,6 +71,7 @@ void AQuest::UpdateStartStatus()
 
 void AQuest::UpdateEndStatus()
 {
+	UE_LOG(QuestLog, Log, TEXT("UpdateEndStatus for quest: %s"), *GetNameSafe(this))
 	for (UQuestCondition* Condition : EndConditions)
 	{
 		if (!ensure(Condition))
@@ -81,6 +85,8 @@ void AQuest::UpdateEndStatus()
 }
 
 void AQuest::SetQuestStatus(EQuestStatus Status) {
+	UE_LOG(QuestLog, Log, TEXT("SetQuestStatus for quest: %s, status now is: %s"), *GetNameSafe(this), *UEnum::GetValueAsString(Status))
+
 	QuestStatus = Status;
 	OnQuestStatusChange.Broadcast(this, Status);
 }

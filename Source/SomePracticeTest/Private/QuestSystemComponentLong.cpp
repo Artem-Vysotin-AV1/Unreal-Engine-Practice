@@ -6,6 +6,7 @@
 #include "Quest.h"
 
 #include "EngineUtils.h"
+#include "QuestCondition.h"
 
 // Sets default values for this component's properties
 UQuestSystemComponentLong::UQuestSystemComponentLong()
@@ -21,6 +22,8 @@ UQuestSystemComponentLong::UQuestSystemComponentLong()
 // Called when the game starts
 void UQuestSystemComponentLong::BeginPlay()
 {
+	UE_LOG(QuestLog, Log, TEXT("BeginPlay for Quest System Component"))
+
 	Super::BeginPlay();
 
 	for (const TSubclassOf<AQuest>& QuestClass : Quests)
@@ -55,4 +58,5 @@ void UQuestSystemComponentLong::GetActiveAndStartedQuests(TArray<AQuest*>& OutQu
 void UQuestSystemComponentLong::RegisterQuest(AQuest* NewQuest)
 {
 	ActiveQuests.AddUnique(NewQuest);
+	UE_LOG(QuestLog, Log, TEXT("Register new quest: %s"), *GetNameSafe(NewQuest))
 }
